@@ -419,13 +419,15 @@ void Utf8_16_Write::setEncoding(UniMode eType)
 }
 
 
-void Utf8_16_Write::fclose()
+bool Utf8_16_Write::fclose()
 {
 	if (m_pNewBuf)
 		delete [] m_pNewBuf;
 
 	if (m_pFile)
-		::fclose(m_pFile);
+		return 0 == ::fclose(m_pFile);
+	
+	return false;
 }
 
 

@@ -147,7 +147,7 @@ public:
 
 	FILE * fopen(const TCHAR *_name, const TCHAR *_type);
 	size_t fwrite(const void* p, size_t _size);
-	void   fclose();
+	bool   fclose();
 
 	size_t convert(char* p, size_t _size);
 	char* getNewBuf() { return reinterpret_cast<char*>(m_pNewBuf); }

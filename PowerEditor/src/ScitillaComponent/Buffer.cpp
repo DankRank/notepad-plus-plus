@@ -916,10 +916,10 @@ bool FileManager::backupCurrentBuffer()
 					if (lengthDoc == 0)
 						items_written = 1;
 				}
-				UnicodeConvertor.fclose();
+				bool closed = UnicodeConvertor.fclose();
 
 				// Note that fwrite() doesn't return the number of bytes written, but rather the number of ITEMS.
-				if(items_written == 1) // backup file has been saved
+				if(items_written == 1 && closed) // backup file has been saved
 				{
 					buffer->setModifiedStatus(false);
 					result = true;	//all done
@@ -1116,11 +1116,11 @@ bool FileManager::saveBuffer(BufferID id, const TCHAR * filename, bool isCopy, g
 		// check the language du fichier
 		LangType language = detectLanguageFromTextBegining((unsigned char *)buf, lengthDoc);
 
-		UnicodeConvertor.fclose();
+		bool closed = UnicodeConvertor.fclose();
 
 		// Error, we didn't write the entire document to disk.
 		// Note that fwrite() doesn't return the number of bytes written, but rather the number of ITEMS.
-		if(items_written != 1)
+		if(items_written != 1 && closed)
 		{
 			if(error_msg != NULL)
 				*error_msg = TEXT("Failed to save file.\nNot enough space on disk to save file?");
